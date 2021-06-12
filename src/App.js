@@ -22,16 +22,27 @@ function App() {
 
   const [accion, setAccion] = useState("llamar");
   const [activarInfo, setActivarInfo] = useState(false);
+  let timer = 0;
   const toogleAccion = (e) => {
     e.preventDefault();
-    if (accion === "llamar") {
+    if (accion === "llamar" && activarBoton) {
       setAccion("colgar");
       setActivarInfo(true);
+      timer = setTimeout(() => {
+        // Si es penja expressament després no funciona bé perquè no es mata el setTimeout
+        // Estaria dins d'un if (si no pasa "res"...)
+        setAccion("llamar");
+        setActivarInfo(false);
+        setDisplay("");
+        setActivarBoton(false);
+      }, 5000);
     } else if (accion === "colgar") {
       setAccion("llamar");
       setActivarInfo(false);
       setDisplay("");
       setActivarBoton(false);
+      clearTimeout(timer);
+      timer = 0;
     }
   };
 
