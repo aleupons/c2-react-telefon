@@ -30,6 +30,7 @@ function App() {
     } else if (accion === "colgar") {
       setAccion("llamar");
       setActivarInfo(false);
+      setDisplay("");
     }
   };
 
@@ -37,13 +38,13 @@ function App() {
     <div className="contenedor">
       <Info activarInfo={activarInfo} />
       <main className="telefono">
-        <Teclado marcar={marcar} borrar={borrar} />
+        <Teclado desactivar={activarInfo} marcar={marcar} borrar={borrar} />
         <div className="acciones">
           <Display numerosMarcats={display} />
           <Acciones
             accion={accion}
-            toogleAccion={toogleAccion}
             activarBoton={activarBoton}
+            toogleAccion={toogleAccion}
           />
         </div>
       </main>
