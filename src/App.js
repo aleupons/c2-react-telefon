@@ -31,6 +31,7 @@ function App() {
       setAccion("llamar");
       setActivarInfo(false);
       setDisplay("");
+      setActivarBoton(false);
     }
   };
 
