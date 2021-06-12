@@ -1,53 +1,50 @@
+import { Info } from "./components/Info";
+import { Display } from "./components/Display";
+import { Acciones } from "./components/Acciones";
+import { Teclado } from "./components/Teclado";
+import { useState } from "react";
+
 function App() {
+  const [display, setDisplay] = useState("");
+  const [activarBoton, setActivarBoton] = useState(false);
+  const marcar = (numero) => {
+    if (display.length < 8) {
+      setDisplay(display + numero);
+    } else if (display.length === 8) {
+      setDisplay(display + numero);
+      setActivarBoton(true);
+    }
+  };
+  const borrar = () => {
+    setDisplay(display.slice(0, -1));
+    setActivarBoton(false);
+  };
+
+  const [accion, setAccion] = useState("llamar");
+  const [activarInfo, setActivarInfo] = useState(false);
+  const toogleAccion = (e) => {
+    e.preventDefault();
+    if (accion === "llamar") {
+      setAccion("colgar");
+      setActivarInfo(true);
+    } else if (accion === "colgar") {
+      setAccion("llamar");
+      setActivarInfo(false);
+    }
+  };
+
   return (
-    <div class="contenedor">
-      <span class="mensaje">Llamando...</span>
-      <main class="telefono">
-        <div class="botones">
-          <ol class="teclado">
-            <li>
-              <button>1</button>
-            </li>
-            <li>
-              <button>2</button>
-            </li>
-            <li>
-              <button>3</button>
-            </li>
-            <li>
-              <button>4</button>
-            </li>
-            <li>
-              <button>5</button>
-            </li>
-            <li>
-              <button>6</button>
-            </li>
-            <li>
-              <button>7</button>
-            </li>
-            <li>
-              <button>8</button>
-            </li>
-            <li>
-              <button>9</button>
-            </li>
-            <li>
-              <button>0</button>
-            </li>
-            <li>
-              <button class="big">borrar</button>
-            </li>
-          </ol>
-        </div>
-        <div class="acciones">
-          <span class="numero">667359961</span>
-          <a href="llamar" class="llamar">
-            Llamar
-          </a>
-          <a href="colgar-telefono" class="colgar activo">
-            Colgar
-          </a>
+    <div className="contenedor">
+      <Info activarInfo={activarInfo} />
+      <main className="telefono">
+        <Teclado marcar={marcar} borrar={borrar} />
+        <div className="acciones">
+          <Display numerosMarcats={display} />
+          <Acciones
+            accion={accion}
+            toogleAccion={toogleAccion}
+            activarBoton={activarBoton}
+          />
         </div>
       </main>
     </div>
